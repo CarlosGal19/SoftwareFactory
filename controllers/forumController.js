@@ -95,7 +95,7 @@ const updateForum = async (req, res) => {
         }
         const name = req.body.name;
         const description = req.body.description;
-        if ([name, description].includes(undefined)) {
+        if ([name].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         };
         forum.name = name;

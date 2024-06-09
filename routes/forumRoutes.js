@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware.js');
-const { addForum, getForum, getForums } = require('../controllers/forumController.js');
+const { addForum, getForum, getForums, deleteForum } = require('../controllers/forumController.js');
 
 const router = express.Router();
 
@@ -14,6 +14,10 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', authMiddleware, async (req, res) => {
     addForum(req, res);
+});
+
+router.delete('/:id', authMiddleware, async (req, res) => {
+    deleteForum(req, res);
 });
 
 module.exports = router;

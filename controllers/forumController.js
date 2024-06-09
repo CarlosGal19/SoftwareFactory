@@ -33,22 +33,10 @@ const getForum = async (req, res) => {
 
 const addForum = async (req, res) => {
     try {
-        let token = req.headers.authorization;
-
-        if (!token) {
-            return res.status(401).json({ message: 'Token not provided' });
-        }
-
-        if (!token.startsWith('Bearer ')) {
-            return res.status(401).json({ message: 'Invalid token format' });
-        }
-
-        token = token.split(' ')[1];
 
         const name = req.body.name;
         const description = req.body.description;
-        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Usar verify para verificar el token
-        const creator_id = decoded.id; // Suponiendo que el ID del usuario está en el campo 'id'
+        const creator_id = req.user.id; // Suponiendo que el ID del usuario está en el campo 'id'
 
         if ([name, creator_id].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
@@ -68,8 +56,35 @@ const addForum = async (req, res) => {
     }
 }
 
+const deleteForum = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const userId = req.user.id;
+
+        const forum = await Forum.findByPk(id);
+
+        if (!forum) {
+            return res.status(404).send({ message: 'Forum not found' });
+        }
+
+        if (forum.creator_id !== userId) {
+            return res.status(403).send({ message: 'You are not allowed to delete this forum' });
+        }
+
+        await forum.destroy();
+
+        return res.status(200).send({message: 'Forum deleted'});
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while deleting the forum.'
+        });
+    }
+}
+
 module.exports = {
     addForum,
     getForums,
-    getForum
+    getForum,
+    deleteForum
 }

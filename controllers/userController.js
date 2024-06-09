@@ -99,7 +99,6 @@ const authUser = async (req, res) => {
     }
 };
 
-
 const userProfile = async (req, res) => {
     try {
         const { user } = req;

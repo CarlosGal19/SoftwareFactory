@@ -43,6 +43,7 @@ const addTopic = async (req, res) => {
         };
 
         const topic = await Topic.create({
+            forum_id,
             name,
             description,
             creator_id

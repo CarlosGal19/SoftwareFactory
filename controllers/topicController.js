@@ -83,9 +83,40 @@ const deleteTopic = async (req, res) => {
     }
 }
 
+const updateTopic = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const userId = req.user.id;
+        if(!id) return res.status(400).send({ message: 'Please provide the topic id.' });
+        const topic = await Topic.findByPk(id);
+        if (!topic) {
+            return res.status(404).send({ message: 'Topic not found' });
+        }
+        if (topic.creator_id !== userId) {
+            return res.status(403).send({ message: 'You are not allowed to update this topic' });
+        }
+        const forum_id = req.body.forum_id;
+        const name = req.body.name;
+        const description = req.body.description;
+        if ([forum_id, name].includes(undefined)) {
+            return res.status(400).send({ message: 'Please provide all the required fields.' });
+        }
+        topic.forum_id = forum_id;
+        topic.name = name;
+        topic.description = description;
+        await topic.save();
+        return res.status(200).send({message: 'Topic updated', topic});
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while deleting the topic.'
+        });
+    }
+}
+
 module.exports = {
     addTopic,
     getTopics,
     getTopic,
-    deleteTopic
+    deleteTopic,
+    updateTopic
 }

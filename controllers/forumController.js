@@ -81,9 +81,38 @@ const deleteForum = async (req, res) => {
     }
 }
 
+const updateForum = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const userId = req.user.id;
+        if(!id) return res.status(400).send({ message: 'Please provide the forum id.' });
+        const forum = await Forum.findByPk(id);
+        if (!forum) {
+            return res.status(404).send({ message: 'Forum not found' });
+        }
+        if (forum.creator_id !== userId) {
+            return res.status(403).send({ message: 'You are not allowed to update this forum' });
+        }
+        const name = req.body.name;
+        const description = req.body.description;
+        if ([name, description].includes(undefined)) {
+            return res.status(400).send({ message: 'Please provide all the required fields.' });
+        };
+        forum.name = name;
+        forum.description = description;
+        await forum.save();
+        return res.status(200).send({message: 'Forum updated', forum});
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while deleting the forum.'
+        });
+    }
+}
+
 module.exports = {
     addForum,
     getForums,
     getForum,
-    deleteForum
+    deleteForum,
+    updateForum
 }

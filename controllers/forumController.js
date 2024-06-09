@@ -1,5 +1,4 @@
 const db = require('../db.js');
-const jwt = require('jsonwebtoken');
 
 const Forum = db.forums;
 

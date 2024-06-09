@@ -24,7 +24,7 @@ const topicModel = (sequelize, Sequelize) => {
     }, {
         timestamps: false,
         freezeTableName: true,
-        tableName: 'forum'
+        tableName: 'topic'
     });
 
     return Topic;

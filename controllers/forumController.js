@@ -95,11 +95,13 @@ const updateForum = async (req, res) => {
         }
         const name = req.body.name;
         const description = req.body.description;
+        const updated_at = new Date();
         if ([name].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         };
         forum.name = name;
         forum.description = description;
+        forum.updated_at = updated_at;
         await forum.save();
         return res.status(200).send({message: 'Forum updated', forum});
     } catch (error) {

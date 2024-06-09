@@ -4,6 +4,7 @@ const userRoutes = require('./routes/userRoutes.js');
 const forumRoutes = require('./routes/forumRoutes.js');
 const majorRoutes = require('./routes/majorRoutes.js');
 const userTypeRoutes = require('./routes/userTypeRoutes.js');
+const topicRoutes = require('./routes/topicRoutes.js');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/forums', forumRoutes);
 app.use('/api/majors', majorRoutes);
 app.use('/api/user-types', userTypeRoutes);
+app.use('/api/topics', topicRoutes);
 
 app.get('/', (req, res) => {
     res.send({'Hello World': 'Welcome to the API'});

@@ -25,5 +25,6 @@ db.userTypes = require('./models/userType.model.js')(sequelize, Sequelize);
 db.majors = require('./models/major.model.js')(sequelize, Sequelize);
 db.users = require('./models/user.model.js')(sequelize, Sequelize);
 db.forums = require('./models/forum.model.js')(sequelize, Sequelize);
+db.topics = require('./models/topic.model.js')(sequelize, Sequelize);
 
 module.exports = db;

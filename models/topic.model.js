@@ -20,6 +20,14 @@ const topicModel = (sequelize, Sequelize) => {
         creator_id: {
             type: Sequelize.INTEGER,
             allowNull: false
+        },
+        created_at:{
+            type: Sequelize.DATE,
+            defaultValue: Sequelize.NOW
+        },
+        updated_at:{
+            type: Sequelize.DATE,
+            defaultValue: Sequelize.NOW
         }
     }, {
         timestamps: false,

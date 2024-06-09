@@ -1,12 +1,11 @@
 const db = require('../db.js');
 const jwt = require('jsonwebtoken');
 
-const forumModel = db.forums;
+const Forum = db.forums;
 
 const getForums = async (req, res) => {
     try {
-        const forums = await forumModel.findAll();
-
+        const forums = await Forum.findAll();
         return res.status(200).send(forums);
     } catch (error) {
         return res.status(500).send({
@@ -18,7 +17,7 @@ const getForums = async (req, res) => {
 const getForum = async (req, res) => {
     try {
         const id = req.params.id;
-        const forum = await forumModel.findByPk(id);
+        const forum = await Forum.findByPk(id);
 
         if (!forum) {
             return res.status(404).send({ message: 'Forum not found' });
@@ -55,7 +54,7 @@ const addForum = async (req, res) => {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         };
 
-        const forum = await forumModel.create({
+        const forum = await Forum.create({
             name,
             description,
             creator_id

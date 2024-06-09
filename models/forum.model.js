@@ -1,4 +1,4 @@
-const userModel = (sequelize, Sequelize) => {
+const forumModel = (sequelize, Sequelize) => {
     const Forum = sequelize.define('forum', {
         id: {
             type: Sequelize.INTEGER,
@@ -12,7 +12,7 @@ const userModel = (sequelize, Sequelize) => {
         },
         description: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
         },
         creator_id: {
             type: Sequelize.INTEGER,
@@ -25,10 +25,6 @@ const userModel = (sequelize, Sequelize) => {
         updated_at:{
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW
-        },
-        deleted_at: {
-            type: Sequelize.DATE,
-            allowNull: true
         }
     }, {
         timestamps: false,
@@ -39,4 +35,4 @@ const userModel = (sequelize, Sequelize) => {
     return Forum;
 }
 
-module.exports = userModel;
+module.exports = forumModel;

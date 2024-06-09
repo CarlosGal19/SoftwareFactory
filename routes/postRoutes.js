@@ -1,9 +1,27 @@
 const express = require('express');
+const authMiddleware = require('../middlewares/authMiddleware.js');
+const { getPost, getPosts, createPost, updatePost, deletePost } = require('../controllers/postController.js');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send({'Hello': 'Welcome to the API from postRoutes.js'});
+router.get('/', authMiddleware, (req, res) => {
+    getPosts(req, res);
+});
+
+router.get('/:id', authMiddleware, (req, res) => {
+    getPost(req, res);
+});
+
+router.post('/', authMiddleware, (req, res) => {
+    createPost(req, res);
+});
+
+router.patch('/:id', authMiddleware, (req, res) => {
+    updatePost(req, res);
+});
+
+router.delete('/:id', authMiddleware, (req, res) => {
+    deletePost(req, res);
 });
 
 module.exports = router;

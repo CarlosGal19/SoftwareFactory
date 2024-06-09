@@ -4,11 +4,11 @@ const { addTopic, getTopic, getTopics, deleteTopic, updateTopic } = require('../
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     getTopics(req, res);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, async (req, res) => {
     getTopic(req, res);
 });
 

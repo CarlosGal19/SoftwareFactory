@@ -4,11 +4,11 @@ const { addForum, getForum, getForums, deleteForum, updateForum } = require('../
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     getForums(req, res);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware,async (req, res) => {
     getForum(req, res);
 });
 

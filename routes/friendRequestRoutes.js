@@ -1,9 +1,8 @@
 const express = require('express');
 const {
-    getFriendRequest,
     getFriendRequests,
     addFriendRequest,
-    updateFriendRequest,
+    acceptFriendRequest,
     deleteFriendRequest
 } = require('../controllers/friendRequestController.js');
 const authMiddleware = require('../middlewares/authMiddleware.js');
@@ -14,16 +13,12 @@ router.get('/', authMiddleware, async (req, res) => {
     getFriendRequests(req, res);
 });
 
-router.get('/:id', authMiddleware, async (req, res) => {
-    getFriendRequest(req, res);
-});
-
 router.post('/', authMiddleware, async (req, res) => {
     addFriendRequest(req, res);
 });
 
-router.patch('/:id', authMiddleware, async (req, res) => {
-    updateFriendRequest(req, res);
+router.patch('/', authMiddleware, async (req, res) => {
+    acceptFriendRequest(req, res);
 });
 
 router.delete('/:id', authMiddleware, async (req, res) => {

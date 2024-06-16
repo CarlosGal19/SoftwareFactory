@@ -28,5 +28,6 @@ db.forums = require('./models/forum.model.js')(sequelize, Sequelize);
 db.topics = require('./models/topic.model.js')(sequelize, Sequelize);
 db.posts = require('./models/post.model.js')(sequelize, Sequelize);
 db.friendRequests = require('./models/friendRequest.model.js')(sequelize, Sequelize);
+db.friends = require('./models/friend.model.js')(sequelize, Sequelize);
 
 module.exports = db;

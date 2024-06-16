@@ -7,6 +7,7 @@ const userTypeRoutes = require('./routes/userTypeRoutes.js');
 const topicRoutes = require('./routes/topicRoutes.js');
 const postRoutes = require('./routes/postRoutes.js');
 const friendRequestRoutes = require('./routes/friendRequestRoutes.js');
+const friendRoutes = require('./routes/friendRoutes.js');
 
 const app = express();
 

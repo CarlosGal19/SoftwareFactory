@@ -38,15 +38,20 @@ const addFriendRequest = async (req, res) => {
     }
 }
 
-const acceptFriendRequest = async (req, res) => {
+const updateFriendRequest = async (req, res) => {
     try {
-        const sender_id = req.user.id;
-        const receiver_id = req.body.receiver_id;
-        const status = 'accepted';
+        const receiver_id = req.user.id;
+        const { sender_id, status } = req.body;
         if ([sender_id, status, receiver_id].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         }
+        if (status !== 'accepted' && status !== 'rejected') {
+            return res.status(400).send({ message: 'Invalid status. Please provide either accepted or rejected.' });
+        }
         const friendRequest = await FriendRequest.update({ status }, { where: { sender_id, receiver_id } });
+        if (status === 'rejected') {
+            return res.status(200).send({ message: 'Friend request rejected successfully', friendRequest });
+        }
         const newFriend = await Friend.create({ user_1_id: sender_id, user_2_id: receiver_id });
         return res.status(200).send({ message: 'Friend request accepted successfully', friendRequest, newFriend });
     } catch (error) {
@@ -56,27 +61,8 @@ const acceptFriendRequest = async (req, res) => {
     }
 }
 
-const cancelFriendRequest = async (req, res) => {
-    try {
-        const sender_id = req.user.id;
-        const receiver_id = req.body.receiver_id;
-        const status = 'rejected';
-        if ([sender_id, status, receiver_id].includes(undefined)) {
-            return res.status(400).send({ message: 'Please provide all the required fields.' });
-        }
-        const friendRequest = await FriendRequest.update({ status }, { where: { sender_id, receiver_id } });
-        return res.status(200).send({ message: 'Friend request updated successfully', friendRequest });
-    } catch (error) {
-        return res.status(500).send({
-            message: 'Some error occurred while updating the friend request.'
-        });
-    }
-}
-
-
 module.exports = {
     getFriendRequests,
     addFriendRequest,
-    acceptFriendRequest,
-    cancelFriendRequest
+    updateFriendRequest
 }

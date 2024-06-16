@@ -3,7 +3,7 @@ const {
     getFriendRequests,
     addFriendRequest,
     acceptFriendRequest,
-    deleteFriendRequest
+    cancelFriendRequest
 } = require('../controllers/friendRequestController.js');
 const authMiddleware = require('../middlewares/authMiddleware.js');
 
@@ -21,8 +21,8 @@ router.patch('/', authMiddleware, async (req, res) => {
     acceptFriendRequest(req, res);
 });
 
-router.delete('/:id', authMiddleware, async (req, res) => {
-    deleteFriendRequest(req, res);
+router.delete('/', authMiddleware, async (req, res) => {
+    cancelFriendRequest(req, res);
 });
 
 module.exports = router;

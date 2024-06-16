@@ -23,6 +23,7 @@ app.use('/api/user-types', userTypeRoutes);
 app.use('/api/topics', topicRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/friend-requests', friendRequestRoutes);
+app.use('/api/friends', friendRoutes);
 
 app.get('/', (req, res) => {
     res.send({'Hello World': 'Welcome to the API'});

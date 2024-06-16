@@ -14,7 +14,7 @@ const postModel = (sequelize, Sequelize) => {
             allowNull: false
         },
         content: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING,
             allowNull: false
         },
         url_img: {

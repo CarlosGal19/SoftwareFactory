@@ -29,7 +29,7 @@ const getPost = async (req, res) => {
     }
 }
 
-const addPost = async (req, res) => {
+const createPost = async (req, res) => {
     try {
         const { topic_id, content, url_img } = req.body;
         const creator_id = req.user.id; // Suponiendo que el ID del usuario está en el campo 'id'
@@ -109,7 +109,7 @@ const deletePost = async (req, res) => {
 module.exports = {
     getPosts,
     getPost,
-    addPost,
+    createPost,
     updatePost,
     deletePost
 };

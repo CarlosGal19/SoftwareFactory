@@ -8,19 +8,13 @@ const userModel = db.users;
 
 const addUser = async (req, res) => {
     try {
-        const email = req.body.email;
-        const userExists = await userModel.findOne({ where: { email } });
+        const { email, user_name } = req.body;
+        const userExists = await userModel.findOne({ where: { [db.Sequelize.Op.or]: { email, user_name}}});
         if (userExists) {
             return res.status(400).send({message: 'User already exists.'});
         }
-        const user_name = req.body.user_name;
-        const name = req.body.name;
-        const last_name = req.body.last_name;
-        const birth_date = req.body.birth_date;
-        const genre = req.body.genre;
-        const user_type_id = req.body.user_type_id;
-        const major_id = req.body.major_id;
-        const password = req.body.password;
+        const { name, last_name, birth_date, genre, user_type_id, major_id, password } = req.body;
+        // const password = req.body.password;
         if([user_name, name, last_name, birth_date, genre, user_type_id, major_id, email, password].includes(undefined)) {
             return res.status(400).send({message: 'Please provide all the required fields.'});
         }

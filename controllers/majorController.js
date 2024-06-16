@@ -31,8 +31,7 @@ const getMajor = async (req, res) => {
 
 const addMajor = async (req, res) => {
     try {
-        const name = req.body.name;
-        const description = req.body.description;
+        const { name, description } = req.body;
         if ([name, description].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         };

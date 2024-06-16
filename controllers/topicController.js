@@ -32,10 +32,7 @@ const getTopic = async (req, res) => {
 
 const addTopic = async (req, res) => {
     try {
-
-        const forum_id = req.body.forum_id;
-        const name = req.body.name;
-        const description = req.body.description;
+        const { forum_id, name, description } = req.body;
         const creator_id = req.user.id; // Suponiendo que el ID del usuario está en el campo 'id'
 
         if ([forum_id, name, creator_id].includes(undefined)) {

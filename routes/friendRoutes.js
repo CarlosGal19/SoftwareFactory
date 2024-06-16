@@ -11,7 +11,7 @@ router.get('/', authMiddleware, async (req, res) => {
     getFriends(req, res);
 });
 
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/', authMiddleware, async (req, res) => {
     deleteFriend(req, res);
 });
 

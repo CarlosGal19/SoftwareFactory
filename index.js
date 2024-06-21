@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const userRoutes = require('./routes/userRoutes.js');
 const forumRoutes = require('./routes/forumRoutes.js');
@@ -11,7 +12,19 @@ const friendRoutes = require('./routes/friendRoutes.js');
 
 const app = express();
 
+app.use(cors());
+
 require('dotenv').config();
+
+const allowDomains = [
+    process.env.FRONTEND_URL
+];
+
+const corsOptions = {
+    origin: allowDomains,
+    optionsSuccessStatus: 200
+};
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;

@@ -9,12 +9,25 @@ const options = {
             version: '1.0.0',
             description: 'API documentation for UTMA Network'
         },
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT'
+                }
+            }
+        },
+        security: [{
+            bearerAuth: []
+        }],
         paths: {
-            '/forums': {
+            '/api/forums': {
                 get: {
                     tags: ['Forums'],
                     summary: 'Get all forums',
                     description: 'Retrieve a list of all forums.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'A list of forums',
@@ -39,6 +52,7 @@ const options = {
                     tags: ['Forums'],
                     summary: 'Create a new forum',
                     description: 'Create a new forum.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -70,11 +84,12 @@ const options = {
                     }
                 }
             },
-            '/forums/{id}': {
+            '/api/forums/{id}': {
                 get: {
                     tags: ['Forums'],
                     summary: 'Get a forum by ID',
                     description: 'Retrieve a forum by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -107,6 +122,7 @@ const options = {
                     tags: ['Forums'],
                     summary: 'Update a forum by ID',
                     description: 'Update the details of a forum by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -152,6 +168,7 @@ const options = {
                     tags: ['Forums'],
                     summary: 'Delete a forum by ID',
                     description: 'Delete a forum by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -170,11 +187,12 @@ const options = {
                     }
                 }
             },
-            '/friend-requests': {
+            '/api/friend-requests': {
                 get: {
                     tags: ['Friend Requests'],
                     summary: 'Get all friend requests',
                     description: 'Retrieve a list of all friend requests.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'A list of friend requests',
@@ -200,6 +218,7 @@ const options = {
                     tags: ['Friend Requests'],
                     summary: 'Create a new friend request',
                     description: 'Create a new friend request.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -237,6 +256,7 @@ const options = {
                     tags: ['Friend Requests'],
                     summary: 'Update a friend request',
                     description: 'Update the status of a friend request.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -271,11 +291,12 @@ const options = {
                     }
                 }
             },
-            '/friends': {
+            '/api/friends': {
                 get: {
                     tags: ['Friends'],
                     summary: 'Get all friends',
                     description: 'Retrieve a list of all friends.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'A list of friends',
@@ -301,6 +322,7 @@ const options = {
                     tags: ['Friends'],
                     summary: 'Delete a friend',
                     description: 'Remove a friend from the user\'s friend list.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -322,11 +344,12 @@ const options = {
                     }
                 }
             },
-            '/majors': {
+            '/api/majors': {
                 post: {
                     tags: ['Majors'],
                     summary: 'Create a new major',
                     description: 'Create a new major.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -361,6 +384,7 @@ const options = {
                     tags: ['Majors'],
                     summary: 'Get all majors',
                     description: 'Retrieve a list of all majors.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'A list of majors',
@@ -382,11 +406,12 @@ const options = {
                     }
                 }
             },
-            '/majors/{id}': {
+            '/api/majors/{id}': {
                 get: {
                     tags: ['Majors'],
                     summary: 'Get a major by ID',
                     description: 'Retrieve a major by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -416,11 +441,12 @@ const options = {
                     }
                 }
             },
-            '/posts': {
+            '/api/posts': {
                 get: {
                     tags: ['Posts'],
                     summary: 'Get all posts',
                     description: 'Retrieve a list of all posts.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'A list of posts',
@@ -446,6 +472,7 @@ const options = {
                     tags: ['Posts'],
                     summary: 'Create a new post',
                     description: 'Create a new post.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -479,11 +506,12 @@ const options = {
                     }
                 }
             },
-            '/posts/{id}': {
+            '/api/posts/{id}': {
                 get: {
                     tags: ['Posts'],
                     summary: 'Get a post by ID',
                     description: 'Retrieve a post by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -517,6 +545,7 @@ const options = {
                     tags: ['Posts'],
                     summary: 'Update a post by ID',
                     description: 'Update the details of a post by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -564,6 +593,7 @@ const options = {
                     tags: ['Posts'],
                     summary: 'Delete a post by ID',
                     description: 'Delete a post by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -582,11 +612,12 @@ const options = {
                     }
                 }
             },
-            '/topics': {
+            '/api/topics': {
                 get: {
                     tags: ['Topics'],
                     summary: 'Get all topics',
                     description: 'Retrieve a list of all topics.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'A list of topics',
@@ -611,6 +642,7 @@ const options = {
                     tags: ['Topics'],
                     summary: 'Create a new topic',
                     description: 'Create a new topic.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -642,11 +674,12 @@ const options = {
                     }
                 }
             },
-            '/topics/{id}': {
+            '/api/topics/{id}': {
                 get: {
                     tags: ['Topics'],
                     summary: 'Get a topic by ID',
                     description: 'Retrieve a topic by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -679,6 +712,7 @@ const options = {
                     tags: ['Topics'],
                     summary: 'Update a topic by ID',
                     description: 'Update the details of a topic by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -724,6 +758,7 @@ const options = {
                     tags: ['Topics'],
                     summary: 'Delete a topic by ID',
                     description: 'Delete a topic by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -742,7 +777,7 @@ const options = {
                     }
                 }
             },
-            '/users': {
+            '/api/users': {
                 post: {
                     tags: ['Users'],
                     summary: 'Create a new user',
@@ -781,7 +816,7 @@ const options = {
                     }
                 }
             },
-            '/users/confirm/{token}': {
+            '/api/users/confirm/{token}': {
                 get: {
                     tags: ['Users'],
                     summary: 'Confirm a user',
@@ -804,7 +839,7 @@ const options = {
                     }
                 }
             },
-            '/users/login': {
+            '/api/users/login': {
                 post: {
                     tags: ['Users'],
                     summary: 'Authenticate a user',
@@ -840,11 +875,12 @@ const options = {
                     }
                 }
             },
-            '/users/profile': {
+            '/api/users/profile': {
                 get: {
                     tags: ['Users'],
                     summary: 'Get user profile',
                     description: 'Get the profile of the authenticated user.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'User profile',
@@ -863,7 +899,7 @@ const options = {
                     }
                 }
             },
-            '/users/forget-password': {
+            '/api/users/forget-password': {
                 post: {
                     tags: ['Users'],
                     summary: 'Reset password',
@@ -888,7 +924,7 @@ const options = {
                     }
                 }
             },
-            '/users/forget-password/{token}': {
+            '/api/users/forget-password/{token}': {
                 get: {
                     tags: ['Users'],
                     summary: 'Validate password reset token',
@@ -934,11 +970,12 @@ const options = {
                     }
                 }
             },
-            '/user-types': {
+            '/api/user-types': {
                 post: {
                     tags: ['User Types'],
                     summary: 'Create a new user type',
                     description: 'Create a new user type.',
+                    security: [{ bearerAuth: [] }],
                     requestBody: {
                         required: true,
                         content: {
@@ -973,6 +1010,7 @@ const options = {
                     tags: ['User Types'],
                     summary: 'Get all user types',
                     description: 'Retrieve a list of all user types.',
+                    security: [{ bearerAuth: [] }],
                     responses: {
                         '200': {
                             description: 'A list of user types',
@@ -994,11 +1032,12 @@ const options = {
                     }
                 }
             },
-            '/user-types/{id}': {
+            '/api/user-types/{id}': {
                 get: {
                     tags: ['User Types'],
                     summary: 'Get a user type by ID',
                     description: 'Retrieve a user type by its ID.',
+                    security: [{ bearerAuth: [] }],
                     parameters: [
                         {
                             in: 'path',
@@ -1030,7 +1069,7 @@ const options = {
             }
         }
     },
-    apis: []
+    apis: [] // No necesitamos esto ya que estamos definiendo manualmente
 };
 
 const swaggerSpec = swaggerJSDoc(options);

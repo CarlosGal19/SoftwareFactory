@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const swaggerDocs = require('./swaggerConfig/swagger.js');
 
 const userRoutes = require('./routes/userRoutes.js');
 const forumRoutes = require('./routes/forumRoutes.js');
@@ -44,4 +45,5 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    swaggerDocs(app, PORT);
 });

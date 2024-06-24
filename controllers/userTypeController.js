@@ -4,6 +4,10 @@ const UserType = db.userTypes;
 
 const getUserTypes = async (req, res) => {
     try {
+        const user_type_id = req.user.user_type_id;
+        if (user_type_id !== 1) {
+            return res.status(403).send({ message: 'You are not authorized to perform this action.' });
+        }
         const userTypes = await UserType.findAll();
         return res.status(200).send({userTypes});
     } catch (error) {
@@ -15,6 +19,10 @@ const getUserTypes = async (req, res) => {
 
 const getUserType = async (req, res) => {
     try {
+        const user_type_id = req.user.user_type_id;
+        if (user_type_id !== 1) {
+            return res.status(403).send({ message: 'You are not authorized to perform this action.' });
+        }
         const id = req.params.id;
         if(!id) return res.status(400).send({ message: 'Please provide the user type id.' });
         const userType = await UserType.findByPk(id);

@@ -13,8 +13,6 @@ const friendRoutes = require('./routes/friendRoutes.js');
 
 const app = express();
 
-app.use(cors());
-
 require('dotenv').config();
 
 const allowDomains = [
@@ -25,6 +23,8 @@ const corsOptions = {
     origin: allowDomains,
     optionsSuccessStatus: 200
 };
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 

@@ -21,7 +21,7 @@ const swaggerDocs = (app, port) => {
         res.send(swaggerSpec);
     });
 
-    console.log(`Swagger running on port ${port}`);
+    console.log(`Swagger ready in http://localhost:${port}/api/docs`);
 }
 
 module.exports = swaggerDocs;

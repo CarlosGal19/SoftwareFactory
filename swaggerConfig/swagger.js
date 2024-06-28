@@ -851,7 +851,7 @@ const options = {
                                 schema: {
                                     type: 'object',
                                     properties: {
-                                        username: { type: 'string', example: 'user' },
+                                        email: { type: 'string', example: 'email' },
                                         password: { type: 'string', example: 'password' }
                                     }
                                 }

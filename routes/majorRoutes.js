@@ -8,7 +8,7 @@ router.post('/', authMiddleware, (req, res) => {
     addMajor(req, res);
 });
 
-router.get('/', authMiddleware, (req, res) => {
+router.get('/', (req, res) => {
     getMajors(req, res);
 });
 

@@ -21,7 +21,7 @@ const registerEmail = async (data) => {
         <h1>Email Confirmation</h1>
         <h2>Hello ${name}</h2>
         <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-        <a href='${process.env.USER_URL}/confirm/${token}'> Click here</a>
+        <a href='${process.env.FRONTEND_URL}/confirm-account/${token}'> Click here</a>
       `,
     });
 

@@ -18,7 +18,7 @@ const forgetPassword = async (data) => {
             <h1>Reset Password</h1>
             <h2>Hello ${name}</h2>
             <p>Click the following link to restablish your password</p>
-            <a href='${process.env.USER_URL}/forget-password/${token}'> Reset password </a>
+            <a href='${process.env.FRONTEND_URL}/forget-password/${token}'> Reset password </a>
         `
     });
     console.log('Message sent: %s', info.messageId);

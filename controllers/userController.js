@@ -34,7 +34,7 @@ const addUser = async (req, res) => {
             name,
             token: user.token
         })
-        return res.status(200).send({msg : 'User created successfully', user});
+        return res.status(200).send({message : 'User created successfully', user});
     } catch (error) {
         return res.send({
             message: error.message || 'Some error occurred while creating the user.'
@@ -52,7 +52,7 @@ const confirmUser = async (req, res) => {
         user.confirmed = true;
         user.token = null;
         await user.save();
-        return res.status(200).send({msg: 'User confirmed successfully.'});
+        return res.status(200).send({message: 'User confirmed successfully.'});
     } catch (error) {
         return res.status(500).send({
             message: error.message || 'Some error occurred while confirming the user.'
@@ -69,7 +69,7 @@ const authUser = async (req, res) => {
 
         // If no user is found, respond with a 404 status
         if (!user) {
-            return res.status(404).send({ error: 'User not found' });
+            return res.status(404).send({ message: 'User not found' });
         }
 
         if(!user.confirmed) {
@@ -79,7 +79,7 @@ const authUser = async (req, res) => {
         // Authenticate the user with the provided password
         const isPasswordValid = await user.authenticate(password);
         if (!isPasswordValid) {
-            return res.status(401).send({ error: 'Invalid password' });
+            return res.status(401).send({ message: 'Invalid password' });
         }
 
         // Generate JWT token
@@ -89,26 +89,26 @@ const authUser = async (req, res) => {
         return res.status(200).send({ message: 'User logged in', token });
     } catch (error) {
         // Handle any internal server error
-        return res.status(500).send({ error: `Internal server error: ${error.message}` });
+        return res.status(500).send({ message: `Internal server error: ${error.message}` });
     }
 };
 
 const userProfile = async (req, res) => {
     try {
         const { user } = req;
-        if (!user) return res.status(404).json({ error: `User not found` });
+        if (!user) return res.status(404).json({ message: `User not found` });
         return res.status(200).json({ message: `User profile`, user: user });
     } catch (error) {
-        return res.status(500).json({ error: `Internal server error: ${error.message}` });
+        return res.status(500).json({ message: `Internal server error: ${error.message}` });
     }
 }
 
 const resetPassword = async (req, res) => {
     try {
         const { email } = req.body;
-        if (!email) return res.status(400).json({ error: `Email not provided` });
+        if (!email) return res.status(400).json({ message: `Email not provided` });
         const user = await userModel.findOne({ where : { email }});
-        if (!user) return res.status(404).json({ error: `User not found` });
+        if (!user) return res.status(404).json({ message: `User not found` });
         user.token = generateID();
         await user.save();
         forgetPassword({
@@ -118,36 +118,36 @@ const resetPassword = async (req, res) => {
         })
         return res.status(200).json({ message: `Token with instructions sent`, token: user.token });
     } catch (error) {
-        return res.status(500).json({ error: `Internal server error: ${error.message}` });
+        return res.status(500).json({ message: `Internal server error: ${error.message}` });
     }
 }
 
 const validateToken = async (req, res) => {
     try {
         const { token } = req.params;
-        if (!token) return res.status(400).json({ error: `Token not provided` });
+        if (!token) return res.status(400).json({ message: `Token not provided` });
         const userToken = await userModel.findOne({ where : { token }});
-        if (!userToken) return res.status(404).json({ error: `User not found` });
+        if (!userToken) return res.status(404).json({ message: `User not found` });
         return res.status(200).json({ message: `Token validated` });
     } catch (error) {
-        return res.status(500).json({ error: `Internal server error: ${error.message}` });
+        return res.status(500).json({ message: `Internal server error: ${error.message}` });
     }
 }
 
 const newPassword = async (req, res) => {
     try {
         const { token } = req.params;
-        if (!token) return res.status(400).json({ error: `Token not provided` });
+        if (!token) return res.status(400).json({ message: `Token not provided` });
         const userToken = await userModel.findOne({ where: { token }});
-        if (!userToken) return res.status(404).json({ error: `User not found` });
+        if (!userToken) return res.status(404).json({ message: `User not found` });
         const { password } = req.body;
-        if (!password) return res.status(400).json({ error: `Password not provided` });
+        if (!password) return res.status(400).json({ message: `Password not provided` });
         userToken.password = password;
         userToken.token = null;
         await userToken.save();
         return res.status(200).json({ message: `Password updated` });
     } catch (error) {
-        return res.status(500).json({ error: `Internal server error: ${error.message}` });
+        return res.status(500).json({ message: `Internal server error: ${error.message}` });
     }
 }
 

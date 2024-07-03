@@ -34,7 +34,7 @@ const addUser = async (req, res) => {
             name,
             token: user.token
         })
-        return res.status(200).send({message : 'User created successfully', user});
+        return res.status(200).send({message : 'User created successfully. Check your email.', user});
     } catch (error) {
         return res.send({
             message: error.message || 'Some error occurred while creating the user.'

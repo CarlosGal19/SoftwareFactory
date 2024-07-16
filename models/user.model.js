@@ -57,6 +57,10 @@ const userModel = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         },
+        profile_photo: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
         created_at:{
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW

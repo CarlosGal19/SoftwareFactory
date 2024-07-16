@@ -97,6 +97,10 @@ const userProfile = async (req, res) => {
     try {
         const { user } = req;
         if (!user) return res.status(404).json({ message: `User not found` });
+        // Remove password, confirmed and token from the user object
+        delete user.dataValues.password;
+        delete user.dataValues.confirmed;
+        delete user.dataValues.token
         return res.status(200).json({ message: `User profile`, user: user });
     } catch (error) {
         return res.status(500).json({ message: `Internal server error: ${error.message}` });

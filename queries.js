@@ -72,6 +72,17 @@ const user = [
         "user_type_id": 2,
         "major_id": 4,
         "password": "123456"
+    },
+    {
+        "name": "Alvaro",
+        "last_name": "Esparza",
+        "user_name": "AlvaroEsp666",
+        "email": "alvaro@gmail.com",
+        "birth_date": "2000-06-06",
+        "genre": "M",
+        "user_type_id": 2,
+        "major_id": 2,
+        "password": "123456"
     }
 ]
 

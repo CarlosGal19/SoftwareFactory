@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     getMajors(req, res);
 });
 
-router.get('/:id', authMiddleware, (req, res) => {
+router.get('/:id', (req, res) => {
     getMajor(req, res);
 });
 

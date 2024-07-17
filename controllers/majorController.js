@@ -4,10 +4,6 @@ const Major = db.majors;
 
 const getMajors = async (req, res) => {
     try {
-        // const user_type_id = req.user.user_type_id;
-        // if (user_type_id !== 1) {
-        //     return res.status(403).send({ message: 'You are not authorized to perform this action.' });
-        // }
         const majors = await Major.findAll();
         return res.status(200).send({majors});
     } catch (error) {
@@ -19,10 +15,6 @@ const getMajors = async (req, res) => {
 
 const getMajor = async (req, res) => {
     try {
-        const user_type_id = req.user.user_type_id;
-        if (user_type_id !== 1) {
-            return res.status(403).send({ message: 'You are not authorized to perform this action.' });
-        }
         const id = req.params.id;
         if(!id) return res.status(400).send({ message: 'Please provide the major id.' });
         const major = await Major.findByPk(id);

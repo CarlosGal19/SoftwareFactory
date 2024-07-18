@@ -1,11 +1,15 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware.js');
-const { getPost, getPosts, createPost, updatePost, deletePost, getMyPosts } = require('../controllers/postController.js');
+const { getPost, getPosts, createPost, updatePost, deletePost, getMyPosts, getPostsByTopic } = require('../controllers/postController.js');
 
 const router = express.Router();
 
 router.get('/', authMiddleware, (req, res) => {
     getPosts(req, res);
+});
+
+router.get('/all/:id', authMiddleware, (req, res) => {
+    getPostsByTopic(req, res);
 });
 
 router.get('/:id', authMiddleware, (req, res) => {

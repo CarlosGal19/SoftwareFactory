@@ -131,5 +131,6 @@ module.exports = {
     getMyPosts,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    getPostsByTopic
 };

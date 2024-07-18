@@ -4,8 +4,16 @@ const Topic = db.topics;
 
 const getTopics = async (req, res) => {
     try {
-        const topics = await Topic.findAll();
-        return res.status(200).send({topics});
+        const id = req.params.id;
+        const topics = await Topic.findAll({
+            where: {
+                forum_id: id
+            }
+        });
+        if (!topics) {
+            return res.status(404).send({ message: 'Topics not found' });
+        }
+        return res.status(200).send({message: 'Topics found', topics});
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving topics.'

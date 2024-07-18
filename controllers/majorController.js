@@ -29,6 +29,21 @@ const getMajor = async (req, res) => {
     }
 }
 
+const getMyMajor = async (req, res) => {
+    try {
+        const id = req.user.major_id;
+        const major = await Major.findByPk(id);
+        if (!major) {
+            return res.status(404).send({ message: 'Major not found' });
+        }
+        return res.status(200).send({message: 'Major found', major});
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving the major.'
+        });
+    }
+}
+
 const addMajor = async (req, res) => {
     try {
         const user_type_id = req.user.user_type_id;
@@ -55,5 +70,6 @@ const addMajor = async (req, res) => {
 module.exports = {
     addMajor,
     getMajors,
+    getMyMajor,
     getMajor
 }

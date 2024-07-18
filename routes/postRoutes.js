@@ -12,7 +12,7 @@ router.get('/:id', authMiddleware, (req, res) => {
     getPost(req, res);
 });
 
-router.get('/me', authMiddleware, (req, res) => {
+router.get('/me/posts', authMiddleware, (req, res) => {
     getMyPosts(req, res);
 });
 

@@ -34,6 +34,12 @@ const authMiddleware = async (req, res, next) => {
             return res.status(403).json({ message: 'User not authenticated' });
         }
 
+        // Remove password, token and confirmed fields from user object
+
+        user.password = undefined;
+        user.token = undefined;
+        user.confirmed = undefined;
+
         req.user = user;
 
         next();

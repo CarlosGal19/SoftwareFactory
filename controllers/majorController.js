@@ -31,12 +31,13 @@ const getMajor = async (req, res) => {
 
 const getMyMajor = async (req, res) => {
     try {
-        const id = req.user.major_id;
+        const user = req.user;
+        const id = user.major_id;
         const major = await Major.findByPk(id);
         if (!major) {
             return res.status(404).send({ message: 'Major not found' });
         }
-        return res.status(200).send({message: 'Major found', major});
+        return res.status(200).send({message: 'Major found', major, user});
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the major.'

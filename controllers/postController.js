@@ -5,7 +5,10 @@ const Post = db.posts;
 const getPosts = async (req, res) => {
     try {
         const posts = await Post.findAll();
-        return res.status(200).send({posts});
+        if(!posts) {
+            return res.status(404).send({ message: 'Posts not found' });
+        }
+        return res.status(200).send({message: 'Posts found', posts});
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving posts.'

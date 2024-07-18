@@ -125,6 +125,22 @@ const deletePost = async (req, res) => {
     }
 }
 
+const getPostsByTopic = async (req, res) => {
+    try {
+        const id = req.params.id;
+        if (!id) return res.status(400).send({ message: 'Please provide the topic id.' });
+        const posts = await Post.findAll({ where: { topic_id: id } });
+        if (!posts) {
+            return res.status(404).send({ message: 'Posts not found' });
+        }
+        return res.status(200).send({ message: 'Posts found', posts });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving the posts.'
+        });
+    }
+}
+
 module.exports = {
     getPosts,
     getPost,

@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware.js');
-const { getPost, getPosts, createPost, updatePost, deletePost } = require('../controllers/postController.js');
+const { getPost, getPosts, createPost, updatePost, deletePost, getMyPosts } = require('../controllers/postController.js');
 
 const router = express.Router();
 
@@ -10,6 +10,10 @@ router.get('/', authMiddleware, (req, res) => {
 
 router.get('/:id', authMiddleware, (req, res) => {
     getPost(req, res);
+});
+
+router.get('/me', authMiddleware, (req, res) => {
+    getMyPosts(req, res);
 });
 
 router.post('/', authMiddleware, (req, res) => {

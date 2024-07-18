@@ -29,6 +29,22 @@ const getPost = async (req, res) => {
     }
 }
 
+const getMyPosts = async (req, res) => {
+    try {
+        const user = req.user;
+        const id = user.id;
+        const posts = await Post.findAll({ where: { creator_id: id } });
+        if (!posts) {
+            return res.status(404).send({ message: 'Posts not found' });
+        }
+        return res.status(200).send({ message: 'Posts found', posts, user });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving the posts.'
+        });
+    }
+}
+
 const createPost = async (req, res) => {
     try {
         const { topic_id, content, url_img } = req.body;
@@ -109,6 +125,7 @@ const deletePost = async (req, res) => {
 module.exports = {
     getPosts,
     getPost,
+    getMyPosts,
     createPost,
     updatePost,
     deletePost

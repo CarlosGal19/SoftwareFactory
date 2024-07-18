@@ -102,6 +102,10 @@ const forum = [
     {
         "name": "Foro de Mecatrónica Área Robótica",
         "description": "Foro de discusión sobre Mecatrónica Área Robótica"
+    },
+    {
+        "name": "Foro de Pruebas",
+        "description": "Foro de pruebas"
     }
 ]
 

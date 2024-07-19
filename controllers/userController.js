@@ -13,9 +13,9 @@ const addUser = async (req, res) => {
         if (userExists) {
             return res.status(400).send({message: 'User already exists.'});
         }
-        const { name, last_name, birth_date, genre, major_id, password } = req.body;
+        const { name, last_name, birth_date, gender, major_id, password } = req.body;
         const user_type_id = req.body.user_type_id || 2;
-        if([user_name, name, last_name, birth_date, genre, user_type_id, major_id, email, password].includes(undefined)) {
+        if([user_name, name, last_name, birth_date, gender, user_type_id, major_id, email, password].includes(undefined)) {
             return res.status(400).send({message: 'Please provide all the required fields.'});
         }
         const user = await userModel.create({
@@ -24,7 +24,7 @@ const addUser = async (req, res) => {
             name,
             last_name,
             birth_date,
-            genre,
+            gender,
             user_type_id,
             major_id,
             password

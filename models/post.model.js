@@ -13,6 +13,10 @@ const postModel = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        title: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
         content: {
             type: Sequelize.STRING,
             allowNull: false

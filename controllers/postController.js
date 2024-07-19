@@ -50,15 +50,15 @@ const getMyPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
     try {
-        const { topic_id, content, url_img } = req.body;
-        const creator_id = req.user.id; // Suponiendo que el ID del usuario está en el campo 'id'
-
-        if ([ content, creator_id, topic_id].includes(undefined)) {
+        const { topic_id, content, url_img, title } = req.body;
+        const creator_id = req.user.id;
+        if ([ content, creator_id, topic_id, title].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         };
 
         const post = await Post.create({
             topic_id,
+            title,
             content,
             creator_id,
             url_img
@@ -74,11 +74,11 @@ const createPost = async (req, res) => {
 const updatePost = async (req, res) => {
     try {
         const id = req.params.id;
-        const { content, url_img } = req.body;
+        const { content, url_img, title } = req.body;
 
         if(!id) return res.status(400).send({ message: 'Please provide the post id.' });
 
-        if ([content].includes(undefined)) {
+        if ([content, title].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         };
 
@@ -88,6 +88,7 @@ const updatePost = async (req, res) => {
         }
 
         post.content = content;
+        post.title = title;
         post.url_img = url_img;
         await post.save();
 

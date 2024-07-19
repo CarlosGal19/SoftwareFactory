@@ -8,7 +8,7 @@ const userModel = db.users;
 
 const addUser = async (req, res) => {
     try {
-        const { email, user_name } = req.body;
+        let { email, user_name } = req.body;
         email = email.toLowerCase();
         const userExists = await userModel.findOne({ where: { [db.Sequelize.Op.or]: { email, user_name}}});
         if (userExists) {

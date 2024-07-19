@@ -33,7 +33,7 @@ const userModel = (sequelize, Sequelize) => {
             type: Sequelize.DATEONLY,
             allowNull: false
         },
-        genre: {
+        gender: {
             type: Sequelize.STRING,
             allowNull: false
         },

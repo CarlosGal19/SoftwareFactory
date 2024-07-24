@@ -46,9 +46,8 @@ const addUser = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const id = req.params.id;
-        // Get only user_name from the user
         const user_name = await userModel.findOne({ where: { id }, attributes: ['user_name'] });
-        if (!user) {
+        if (!user_name) {
             return res.status(404).send({ message: 'User not found' });
         }
         return res.status(200).send({ message: 'User found', user_name });

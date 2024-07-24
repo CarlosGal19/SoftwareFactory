@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, confirmUser, authUser, userProfile, resetPassword, validateToken, newPassword } = require('../controllers/userController.js')
+const { addUser, confirmUser, authUser, userProfile, resetPassword, validateToken, newPassword, updateUser } = require('../controllers/userController.js')
 const authMiddleware = require('../middlewares/authMiddleware.js');
 
 
@@ -8,6 +8,10 @@ const router = express.Router();
 router.post('/', (req, res) => {
     addUser(req, res);
 });
+
+router.patch('/update', authMiddleware, (req, res) => {
+    updateUser(req, res);
+})
 
 router.get('/confirm/:token', (req, res) => {
     confirmUser(req, res);

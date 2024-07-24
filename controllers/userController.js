@@ -43,6 +43,29 @@ const addUser = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    try {
+        const id = req.user.id;
+        const { name, last_name, user_name } = req.body;
+        if([name, last_name, user_name].includes(undefined)) {
+            return res.status(400).send({message: 'Please provide all the required fields.'});
+        }
+        const user = await userModel.findOne({ where: { id } });
+        if (!user) {
+            return res.status(404).send({message: 'User not found.'});
+        }
+        user.name = name;
+        user.last_name = last_name;
+        user.user_name = user_name;
+        await user.save();
+        return res.status(200).send({message: 'User updated'});
+    } catch (error) {
+        return res.send({
+            message: error.message || 'Some error occurred while updating the user.'
+        });
+    }
+}
+
 const confirmUser = async (req, res) => {
     try {
         const token = req.params.token;

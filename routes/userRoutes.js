@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
     addUser(req, res);
 });
 
-app.get('/:id', authMiddleware, (req, res) => {
+router.get('/:id', authMiddleware, (req, res) => {
     getUser(req, res);
 });
 

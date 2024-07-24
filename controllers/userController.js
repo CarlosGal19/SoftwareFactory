@@ -58,7 +58,7 @@ const updateUser = async (req, res) => {
         user.last_name = last_name;
         user.user_name = user_name;
         await user.save();
-        return res.status(200).send({message: 'User updated'});
+        return res.status(200).send({message: 'User updated', user});
     } catch (error) {
         return res.send({
             message: error.message || 'Some error occurred while updating the user.'

@@ -186,5 +186,6 @@ module.exports = {
     userProfile,
     resetPassword,
     validateToken,
-    newPassword
+    newPassword,
+    updateUser
 };

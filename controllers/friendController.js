@@ -1,6 +1,8 @@
 const db = require('../db.js');
+const { Op } = require('sequelize');
 
 const Friend = db.friends;
+const User = db.users;
 
 const getFriends = async (req, res) => {
     try {
@@ -35,7 +37,87 @@ const deleteFriend = async (req, res) => {
     }
 }
 
+const getMyFriends = async (req, res) => {
+    try {
+        const id = req.user.id;
+        if (!id) return res.status(400).send({ message: 'Please provide the user id.' });
+
+        // Obtener los IDs de los amigos
+        const friends = await Friend.findAll({
+            where: {
+                [Op.or]: [
+                    { user_1_id: id },
+                    { user_2_id: id }
+                ]
+            }
+        });
+
+        // Extraer los IDs de los amigos
+        const friendIds = friends.map(friend =>
+            friend.user_1_id === id ? friend.user_2_id : friend.user_1_id
+        );
+
+        // Obtener los detalles de los amigos
+        const friendDetails = await User.findAll({
+            where: {
+                id: {
+                    [Op.in]: friendIds
+                }
+            },
+            attributes: ['id', 'name', 'last_name', 'profile_photo']
+        });
+
+        return res.status(200).send({ friends: friendDetails });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving the friends.'
+        });
+    }
+};
+
+
+const getMyNotFriends = async (req, res) => {
+    try {
+        const id = req.user.id;
+        if (!id) return res.status(400).send({ message: 'Please provide the user id.' });
+
+        const friends = await Friend.findAll({
+            where: {
+                [Op.or]: [
+                    { user_1_id: id },
+                    { user_2_id: id }
+                ]
+            }
+        });
+
+        const friendIds = friends.map(friend =>
+            friend.user_1_id === id ? friend.user_2_id : friend.user_1_id
+        );
+
+        friendIds.push(id); // Excluir el propio ID del usuario
+
+        const notFriends = await User.findAll({
+            where: {
+                id: {
+                    [Op.notIn]: friendIds
+                }
+            },
+            attributes: ['id', 'name', 'last_name', 'profile_photo']
+        });
+
+        return res.status(200).send({message: 'Users found', notFriends });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving the not friends.'
+        });
+    }
+}
+
 module.exports = {
     getFriends,
-    deleteFriend
+    deleteFriend,
+    getMyFriends,
+    getMyNotFriends
 };

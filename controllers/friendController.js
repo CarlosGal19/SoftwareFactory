@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 
 const Friend = db.friends;
 const User = db.users;
+const FriendRequest = db.friendRequests;
 
 const getFriends = async (req, res) => {
     try {
@@ -51,13 +52,9 @@ const getMyFriends = async (req, res) => {
                 ]
             }
         });
-
-        // Extraer los IDs de los amigos
         const friendIds = friends.map(friend =>
             friend.user_1_id === id ? friend.user_2_id : friend.user_1_id
         );
-
-        // Obtener los detalles de los amigos
         const friendDetails = await User.findAll({
             where: {
                 id: {
@@ -75,7 +72,6 @@ const getMyFriends = async (req, res) => {
         });
     }
 };
-
 
 const getMyNotFriends = async (req, res) => {
     try {
@@ -95,18 +91,29 @@ const getMyNotFriends = async (req, res) => {
             friend.user_1_id === id ? friend.user_2_id : friend.user_1_id
         );
 
-        friendIds.push(id); // Excluir el propio ID del usuario
+        friendIds.push(id);
+
+        const sentRequests = await FriendRequest.findAll({
+            where: {
+                sender_id: id,
+                status: 'pending'
+            }
+        });
+
+        const sentRequestIds = sentRequests.map(request => request.receiver_id);
+
+        const excludeIds = friendIds.concat(sentRequestIds);
 
         const notFriends = await User.findAll({
             where: {
                 id: {
-                    [Op.notIn]: friendIds
+                    [Op.notIn]: excludeIds
                 }
             },
             attributes: ['id', 'name', 'last_name', 'profile_photo']
         });
 
-        return res.status(200).send({message: 'Users found', notFriends });
+        return res.status(200).send({ message: 'Users found', notFriends });
     } catch (error) {
         console.error(error);
         return res.status(500).send({

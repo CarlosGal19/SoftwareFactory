@@ -1,5 +1,7 @@
 const db = require('../db.js');
 
+const { Op } = require('sequelize');
+
 const FriendRequest = db.friendRequests;
 const Friend = db.friends;
 const User = db.users;
@@ -12,15 +14,33 @@ const getFriendRequests = async (req, res) => {
         }
 
         const friendRequests = await FriendRequest.findAll({
-            where: { receiver_id },
-            include: [{
-                model: User,
-                as: 'sender',
-                attributes: ['id', 'name', 'last_name', 'profile_photo', 'user_name']
-            }]
+            where: { receiver_id, status: 'pending' }
         });
 
-        return res.status(200).send({ friendRequests });
+        const senderIds = friendRequests.map(request => request.sender_id);
+
+        const senders = await User.findAll({
+            where: {
+                id: {
+                    [Op.in]: senderIds
+                }
+            },
+            attributes: ['id', 'name', 'last_name', 'profile_photo', 'user_name']
+        });
+
+        const result = friendRequests.map(request => {
+            const sender = senders.find(user => user.id === request.sender_id);
+            return {
+                id: request.id,
+                receiver_id: request.receiver_id,
+                status: request.status,
+                created_at: request.created_at,
+                updated_at: request.updated_at,
+                sender: sender || {}
+            };
+        });
+
+        return res.status(200).send({ friendRequests: result });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the friend requests.'

@@ -102,7 +102,16 @@ const getMyNotFriends = async (req, res) => {
 
         const sentRequestIds = sentRequests.map(request => request.receiver_id);
 
-        const excludeIds = friendIds.concat(sentRequestIds);
+        const receivedRequests = await FriendRequest.findAll({
+            where: {
+                receiver_id: id,
+                status: 'pending'
+            }
+        });
+
+        const receivedRequestIds = receivedRequests.map(request => request.sender_id);
+
+        const excludeIds = friendIds.concat(sentRequestIds, receivedRequestIds);
 
         const notFriends = await User.findAll({
             where: {

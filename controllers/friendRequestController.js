@@ -2,6 +2,7 @@ const db = require('../db.js');
 
 const FriendRequest = db.friendRequests;
 const Friend = db.friends;
+const User = db.users;
 
 const getFriendRequests = async (req, res) => {
     try {

@@ -31,7 +31,7 @@ const getFriendRequests = async (req, res) => {
 const addFriendRequest = async (req, res) => {
     try {
         const sender_id = req.user.id;
-        const receiver_id = req.body.receiver_id;
+        const receiver_id = req.params.id;
         if ([sender_id, receiver_id].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         }

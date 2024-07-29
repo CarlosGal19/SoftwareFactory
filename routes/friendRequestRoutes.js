@@ -12,7 +12,7 @@ router.get('/', authMiddleware, async (req, res) => {
     getFriendRequests(req, res);
 });
 
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/:id', authMiddleware, async (req, res) => {
     addFriendRequest(req, res);
 });
 

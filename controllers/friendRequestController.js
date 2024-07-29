@@ -6,9 +6,20 @@ const Friend = db.friends;
 const getFriendRequests = async (req, res) => {
     try {
         const receiver_id = req.user.id;
-        if(!receiver_id) return res.status(400).send({ message: 'Please provide the sender id.' });
-        const friendRequests = await FriendRequest.findAll({ where: { receiver_id } });
-        return res.status(200).send({friendRequests});
+        if (!receiver_id) {
+            return res.status(400).send({ message: 'Please provide the receiver id.' });
+        }
+
+        const friendRequests = await FriendRequest.findAll({
+            where: { receiver_id },
+            include: [{
+                model: User,
+                as: 'sender',
+                attributes: ['id', 'name', 'last_name', 'profile_photo', 'user_name']
+            }]
+        });
+
+        return res.status(200).send({ friendRequests });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the friend requests.'

@@ -16,14 +16,14 @@ const addUser = async (req, res) => {
         // if (!valid) {
         //     return res.status(400).send({ message: 'Invalid email domain.' });
         // }
-        const userExists = await userModel.findOne({ where: { [db.Sequelize.Op.or]: { email, user_name}}});
+        const userExists = await userModel.findOne({ where: { [db.Sequelize.Op.or]: { email, user_name } } });
         if (userExists) {
-            return res.status(400).send({message: 'User already exists.'});
+            return res.status(400).send({ message: 'User already exists.' });
         }
         const { name, last_name, birth_date, gender, major_id, password } = req.body;
         const user_type_id = req.body.user_type_id || 2;
-        if([user_name, name, last_name, birth_date, gender, user_type_id, major_id, email, password].includes(undefined)) {
-            return res.status(400).send({message: 'Please provide all the required fields.'});
+        if ([user_name, name, last_name, birth_date, gender, user_type_id, major_id, email, password].includes(undefined)) {
+            return res.status(400).send({ message: 'Please provide all the required fields.' });
         }
         const user = await userModel.create({
             user_name,
@@ -41,7 +41,7 @@ const addUser = async (req, res) => {
             name,
             token: user.token
         })
-        return res.status(200).send({message : 'User created successfully. Check your email.', user});
+        return res.status(200).send({ message: 'User created successfully. Check your email.', user });
     } catch (error) {
         return res.send({
             message: error.message || 'Some error occurred while creating the user.'
@@ -68,18 +68,18 @@ const updateUser = async (req, res) => {
     try {
         const id = req.user.id;
         const { name, last_name, user_name } = req.body;
-        if([name, last_name, user_name].includes(undefined)) {
-            return res.status(400).send({message: 'Please provide all the required fields.'});
+        if ([name, last_name, user_name].includes(undefined)) {
+            return res.status(400).send({ message: 'Please provide all the required fields.' });
         }
         const user = await userModel.findOne({ where: { id } });
         if (!user) {
-            return res.status(404).send({message: 'User not found.'});
+            return res.status(404).send({ message: 'User not found.' });
         }
         user.name = name;
         user.last_name = last_name;
         user.user_name = user_name;
         await user.save();
-        return res.status(200).send({message: 'User updated', user});
+        return res.status(200).send({ message: 'User updated', user });
     } catch (error) {
         return res.send({
             message: error.message || 'Some error occurred while updating the user.'
@@ -90,14 +90,14 @@ const updateUser = async (req, res) => {
 const confirmUser = async (req, res) => {
     try {
         const token = req.params.token;
-        const user = await userModel.findOne({ where: { token }  });
+        const user = await userModel.findOne({ where: { token } });
         if (!user) {
-            return res.status(404).send({message: 'Invalid token.'});
+            return res.status(404).send({ message: 'Invalid token.' });
         }
         user.confirmed = true;
         user.token = null;
         await user.save();
-        return res.status(200).send({message: 'User confirmed successfully.'});
+        return res.status(200).send({ message: 'User confirmed successfully.' });
     } catch (error) {
         return res.status(500).send({
             message: error.message || 'Some error occurred while confirming the user.'
@@ -110,15 +110,15 @@ const authUser = async (req, res) => {
     try {
         const { email, password } = req.body;
         // Fetch the user with the given email and confirmed status
-        const user = await userModel.findOne({ where: { email}});
+        const user = await userModel.findOne({ where: { email } });
 
         // If no user is found, respond with a 404 status
         if (!user) {
             return res.status(404).send({ message: 'User not found' });
         }
 
-        if(!user.confirmed) {
-            return res.status(403).send({message : "User hasn´t been authenticated"})
+        if (!user.confirmed) {
+            return res.status(403).send({ message: "User hasn´t been authenticated" })
         }
 
         // Authenticate the user with the provided password
@@ -156,7 +156,7 @@ const resetPassword = async (req, res) => {
     try {
         const { email } = req.body;
         if (!email) return res.status(400).json({ message: `Email not provided` });
-        const user = await userModel.findOne({ where : { email }});
+        const user = await userModel.findOne({ where: { email } });
         if (!user) return res.status(404).json({ message: `User not found` });
         user.token = generateID();
         await user.save();
@@ -175,7 +175,7 @@ const validateToken = async (req, res) => {
     try {
         const { token } = req.params;
         if (!token) return res.status(400).json({ message: `Token not provided` });
-        const userToken = await userModel.findOne({ where : { token }});
+        const userToken = await userModel.findOne({ where: { token } });
         if (!userToken) return res.status(404).json({ message: `User not found` });
         return res.status(200).json({ message: `Token validated` });
     } catch (error) {
@@ -187,7 +187,7 @@ const newPassword = async (req, res) => {
     try {
         const { token } = req.params;
         if (!token) return res.status(400).json({ message: `Token not provided` });
-        const userToken = await userModel.findOne({ where: { token }});
+        const userToken = await userModel.findOne({ where: { token } });
         if (!userToken) return res.status(404).json({ message: `User not found` });
         const { password } = req.body;
         if (!password) return res.status(400).json({ message: `Password not provided` });

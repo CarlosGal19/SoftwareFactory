@@ -5,10 +5,10 @@ const Post = db.posts;
 const getPosts = async (req, res) => {
     try {
         const posts = await Post.findAll();
-        if(!posts) {
+        if (!posts) {
             return res.status(404).send({ message: 'Posts not found' });
         }
-        return res.status(200).send({message: 'Posts found', posts});
+        return res.status(200).send({ message: 'Posts found', posts });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving posts.'
@@ -24,7 +24,7 @@ const getPost = async (req, res) => {
         if (!post) {
             return res.status(404).send({ message: 'Post not found' });
         }
-        return res.status(200).send({message: 'Post found', post});
+        return res.status(200).send({ message: 'Post found', post });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the post.'
@@ -52,7 +52,7 @@ const createPost = async (req, res) => {
     try {
         const { topic_id, content, url_img, title } = req.body;
         const creator_id = req.user.id;
-        if ([ content, creator_id, topic_id, title].includes(undefined)) {
+        if ([content, creator_id, topic_id, title].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
         };
 
@@ -76,7 +76,7 @@ const updatePost = async (req, res) => {
         const id = req.params.id;
         const { content, url_img, title } = req.body;
 
-        if(!id) return res.status(400).send({ message: 'Please provide the post id.' });
+        if (!id) return res.status(400).send({ message: 'Please provide the post id.' });
 
         if ([content, title].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });

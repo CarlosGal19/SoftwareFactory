@@ -22,7 +22,7 @@ const getForum = async (req, res) => {
             return res.status(404).send({ message: 'Forum not found' });
         }
 
-        return res.status(200).send({message: 'Forum found', forum});
+        return res.status(200).send({ message: 'Forum found', forum });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the forum.'
@@ -71,7 +71,7 @@ const deleteForum = async (req, res) => {
 
         await forum.destroy();
 
-        return res.status(200).send({message: 'Forum deleted'});
+        return res.status(200).send({ message: 'Forum deleted' });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while deleting the forum.'
@@ -83,7 +83,7 @@ const updateForum = async (req, res) => {
     try {
         const id = req.params.id;
         const userId = req.user.id;
-        if(!id) return res.status(400).send({ message: 'Please provide the forum id.' });
+        if (!id) return res.status(400).send({ message: 'Please provide the forum id.' });
         const forum = await Forum.findByPk(id);
         if (!forum) {
             return res.status(404).send({ message: 'Forum not found' });
@@ -101,7 +101,7 @@ const updateForum = async (req, res) => {
         forum.description = description;
         forum.updated_at = updated_at;
         await forum.save();
-        return res.status(200).send({message: 'Forum updated', forum});
+        return res.status(200).send({ message: 'Forum updated', forum });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while deleting the forum.'

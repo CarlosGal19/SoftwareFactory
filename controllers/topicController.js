@@ -13,7 +13,7 @@ const getTopics = async (req, res) => {
         if (!topics) {
             return res.status(404).send({ message: 'Topics not found' });
         }
-        return res.status(200).send({message: 'Topics found', topics});
+        return res.status(200).send({ message: 'Topics found', topics });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving topics.'
@@ -30,7 +30,7 @@ const getTopic = async (req, res) => {
             return res.status(404).send({ message: 'Topic not found' });
         }
 
-        return res.status(200).send({message: 'Topic found', topic});
+        return res.status(200).send({ message: 'Topic found', topic });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the topic.'
@@ -80,7 +80,7 @@ const deleteTopic = async (req, res) => {
 
         await topic.destroy();
 
-        return res.status(200).send({message: 'Topic deleted'});
+        return res.status(200).send({ message: 'Topic deleted' });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while deleting the topic.'
@@ -92,7 +92,7 @@ const updateTopic = async (req, res) => {
     try {
         const id = req.params.id;
         const userId = req.user.id;
-        if(!id) return res.status(400).send({ message: 'Please provide the topic id.' });
+        if (!id) return res.status(400).send({ message: 'Please provide the topic id.' });
         const topic = await Topic.findByPk(id);
         if (!topic) {
             return res.status(404).send({ message: 'Topic not found' });
@@ -112,7 +112,7 @@ const updateTopic = async (req, res) => {
         topic.description = description;
         topic.updated_at = updated_at;
         await topic.save();
-        return res.status(200).send({message: 'Topic updated', topic});
+        return res.status(200).send({ message: 'Topic updated', topic });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while deleting the topic.'

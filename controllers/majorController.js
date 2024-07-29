@@ -5,7 +5,7 @@ const Major = db.majors;
 const getMajors = async (req, res) => {
     try {
         const majors = await Major.findAll();
-        return res.status(200).send({majors});
+        return res.status(200).send({ majors });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving majors.'
@@ -16,12 +16,12 @@ const getMajors = async (req, res) => {
 const getMajor = async (req, res) => {
     try {
         const id = req.params.id;
-        if(!id) return res.status(400).send({ message: 'Please provide the major id.' });
+        if (!id) return res.status(400).send({ message: 'Please provide the major id.' });
         const major = await Major.findByPk(id);
         if (!major) {
             return res.status(404).send({ message: 'Major not found' });
         }
-        return res.status(200).send({message: 'Major found', major});
+        return res.status(200).send({ message: 'Major found', major });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the major.'
@@ -37,7 +37,7 @@ const getMyMajor = async (req, res) => {
         if (!major) {
             return res.status(404).send({ message: 'Major not found' });
         }
-        return res.status(200).send({message: 'Major found', major, user});
+        return res.status(200).send({ message: 'Major found', major, user });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the major.'

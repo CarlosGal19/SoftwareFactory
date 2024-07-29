@@ -9,7 +9,7 @@ const getUserTypes = async (req, res) => {
             return res.status(403).send({ message: 'You are not authorized to perform this action.' });
         }
         const userTypes = await UserType.findAll();
-        return res.status(200).send({userTypes});
+        return res.status(200).send({ userTypes });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving user types.'
@@ -24,12 +24,12 @@ const getUserType = async (req, res) => {
             return res.status(403).send({ message: 'You are not authorized to perform this action.' });
         }
         const id = req.params.id;
-        if(!id) return res.status(400).send({ message: 'Please provide the user type id.' });
+        if (!id) return res.status(400).send({ message: 'Please provide the user type id.' });
         const userType = await UserType.findByPk(id);
         if (!userType) {
             return res.status(404).send({ message: 'User type not found' });
         }
-        return res.status(200).send({message: 'User type found', userType});
+        return res.status(200).send({ message: 'User type found', userType });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while retrieving the user type.'

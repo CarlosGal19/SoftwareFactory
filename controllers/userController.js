@@ -6,10 +6,16 @@ const forgetPassword = require('../helpers/forgetPasswordEmail.js');
 
 const userModel = db.users;
 
+// const domains = ['@utma.edu.mx'];
+
 const addUser = async (req, res) => {
     try {
         let { email, user_name } = req.body;
         email = email.toLowerCase();
+        // const valid = domains.some(domain => email.includes(domain));
+        // if (!valid) {
+        //     return res.status(400).send({ message: 'Invalid email domain.' });
+        // }
         const userExists = await userModel.findOne({ where: { [db.Sequelize.Op.or]: { email, user_name}}});
         if (userExists) {
             return res.status(400).send({message: 'User already exists.'});

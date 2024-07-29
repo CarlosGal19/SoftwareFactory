@@ -18,18 +18,33 @@ const getFriendRequests = async (req, res) => {
 
 const addFriendRequest = async (req, res) => {
     try {
-        const sender_id = req.user.id
+        const sender_id = req.user.id;
         const receiver_id = req.body.receiver_id;
         if ([sender_id, receiver_id].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });
-        };
-        const status = 'pending';
+        }
+        if (sender_id === receiver_id) {
+            return res.status(400).send({ message: 'You cannot send a friend request to yourself.' });
+        }
+        const receiver = await User.findByPk(receiver_id);
+        if (!receiver) {
+            return res.status(404).send({ message: 'Receiver not found.' });
+        }
+        const existingRequest = await FriendRequest.findOne({
+            where: {
+                sender_id,
+                receiver_id,
+                status: 'pending'
+            }
+        });
+        if (existingRequest) {
+            return res.status(409).send({ message: 'Friend request already sent.' });
+        }
         const friendRequest = await FriendRequest.create({
             sender_id,
             receiver_id,
-            status
+            status: 'pending',
         });
-
         return res.status(200).send({ message: 'Friend request created successfully', friendRequest });
     } catch (error) {
         return res.status(500).send({

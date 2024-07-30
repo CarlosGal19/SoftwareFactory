@@ -138,6 +138,41 @@ const authUser = async (req, res) => {
     }
 };
 
+const authAdmin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        // Fetch the user with the given email and confirmed status
+        const user = await userModel.findOne({ where: { email } });
+
+        // If no user is found, respond with a 404 status
+        if (!user) {
+            return res.status(404).send({ message: 'User not found' });
+        }
+
+        if (!user.confirmed) {
+            return res.status(403).send({ message: "User hasn´t been authenticated" })
+        }
+
+        if (user.user_type_id !== 1) {
+            return res.status(403).send({ message: 'User is not an admin' });
+        }
+
+        // Authenticate the user with the provided password
+        const isPasswordValid = await user.authenticate(password);
+        if (!isPasswordValid) {
+            return res.status(401).send({ message: 'Invalid password' });
+        }
+
+        // Generate JWT token
+        const token = generateJWT(user.id, user.name);
+
+        // Respond with a 200 status and the generated token
+        return res.status(200).send({ message: 'User logged in', token });
+    } catch (error) {
+        return res.status(500).send({ message: `Internal server error: ${error.message}` });
+    }
+}
+
 const userProfile = async (req, res) => {
     try {
         const { user } = req;
@@ -209,5 +244,6 @@ module.exports = {
     validateToken,
     newPassword,
     updateUser,
-    getUser
+    getUser,
+    authAdmin
 };

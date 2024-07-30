@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, confirmUser, authUser, userProfile, resetPassword, validateToken, newPassword, updateUser, getUser } = require('../controllers/userController.js')
+const { addUser, confirmUser, authUser, userProfile, resetPassword, validateToken, newPassword, updateUser, getUser, authAdmin } = require('../controllers/userController.js')
 const authMiddleware = require('../middlewares/authMiddleware.js');
 
 
@@ -7,6 +7,10 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
     addUser(req, res);
+});
+
+router.post('/admin/login', (req, res) => {
+    authAdmin(req, res);
 });
 
 router.get('/:id', authMiddleware, (req, res) => {

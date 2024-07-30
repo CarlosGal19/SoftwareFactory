@@ -1,10 +1,11 @@
 const express = require('express');
 const { addMajor, getMajors, getMajor, getMyMajor } = require('../controllers/majorController.js')
 const authMiddleware = require('../middlewares/authMiddleware.js');
+const adminMiddleware = require('../middlewares/adminMiddleware.js');
 
 const router = express.Router();
 
-router.post('/', authMiddleware, (req, res) => {
+router.post('/', authMiddleware, adminMiddleware, (req, res) => {
     addMajor(req, res);
 });
 

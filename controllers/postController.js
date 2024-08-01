@@ -94,7 +94,7 @@ const updatePost = async (req, res) => {
 
         return res.status(200).send({ message: 'Post updated successfully', post });
     } catch (error) {
-        return res.status(500).send({
+        return res.status (500).send({
             message: 'Some error occurred while updating the post.'
         });
     }

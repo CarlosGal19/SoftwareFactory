@@ -130,7 +130,7 @@ const authUser = async (req, res) => {
         const type='user';
 
         // Generate JWT token
-        const token = generateJWT(user.id, user.name);
+        const token = generateJWT(user.id, user.name, type);
 
         // Respond with a 200 status and the generated token
         return res.status(200).send({ message: 'User logged in', token });

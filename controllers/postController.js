@@ -74,7 +74,6 @@ const createPost = async (req, res) => {
 const updatePost = async (req, res) => {
     try {
         const id = req.params.id;
-        const editor = req.user.id;
         const { content, url_img, title } = req.body;
 
         if (!id) return res.status(400).send({ message: 'Please provide the post id.' });
@@ -87,9 +86,7 @@ const updatePost = async (req, res) => {
         if (!post) {
             return res.status(404).send({ message: 'Post not found' });
         }
-        if(post.creator_id !== editor) {
-            return res.status(403).send({ message: 'You are not allowed to update this post' });
-        }
+
         post.content = content;
         post.title = title;
         post.url_img = url_img;

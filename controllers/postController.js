@@ -179,6 +179,17 @@ const validatePost = async (req, res) => {
     }
 }
 
+const getCounterNoValidatedPosts = async (req, res) => {
+    try {
+        const posts = await Post.count({ where: { is_validated: false } });
+        return res.status(200).send({ posts });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving posts.'
+        });
+    }
+}
+
 module.exports = {
     getPosts,
     getPost,
@@ -188,5 +199,6 @@ module.exports = {
     deletePost,
     getPostsByTopic,
     getNoValidatedPosts,
-    validatePost
+    validatePost,
+    getCounterNoValidatedPosts
 };

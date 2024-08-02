@@ -161,6 +161,24 @@ const getNoValidatedPosts = async (req, res) => {
     }
 }
 
+const validatePost = async (req, res) => {
+    try {
+        const post_id = req.params.id;
+        if (!post_id) return res.status(400).send({ message: 'Please provide the post id.' });
+        const post = await Post.findByPk(post_id);
+        if (!post) {
+            return res.status(404).send({ message: 'Post not found' });
+        }
+        post.is_validated = true;
+        await post.save();
+        return res.status(200).send({ message: 'Post validated successfully', post });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while validating the post.'
+        });
+    }
+}
+
 module.exports = {
     getPosts,
     getPost,
@@ -169,5 +187,6 @@ module.exports = {
     updatePost,
     deletePost,
     getPostsByTopic,
-    getNoValidatedPosts
+    getNoValidatedPosts,
+    validatePost
 };

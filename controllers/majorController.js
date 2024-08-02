@@ -47,10 +47,6 @@ const getMyMajor = async (req, res) => {
 
 const addMajor = async (req, res) => {
     try {
-        const user_type_id = req.user.user_type_id;
-        if (user_type_id !== 1) {
-            return res.status(403).send({ message: 'You are not authorized to perform this action.' });
-        }
         const { name, description } = req.body;
         if ([name, description].includes(undefined)) {
             return res.status(400).send({ message: 'Please provide all the required fields.' });

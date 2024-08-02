@@ -4,7 +4,7 @@ const Post = db.posts;
 
 const getPosts = async (req, res) => {
     try {
-        const posts = await Post.findAll();
+        const posts = await Post.findAll({ where: { is_validated: true } });
         if (!posts) {
             return res.status(404).send({ message: 'Posts not found' });
         }

@@ -13,6 +13,11 @@ const postModel = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        is_validated: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
         title: {
             type: Sequelize.STRING,
             allowNull: false

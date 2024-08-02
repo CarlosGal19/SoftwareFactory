@@ -61,7 +61,7 @@ const getMyFriends = async (req, res) => {
                     [Op.in]: friendIds
                 }
             },
-            attributes: ['id', 'name', 'last_name', 'profile_photo']
+            attributes: ['id', 'name', 'last_name', 'profile_photo', 'user_name']
         });
 
         return res.status(200).send({ friends: friendDetails });
@@ -119,7 +119,7 @@ const getMyNotFriends = async (req, res) => {
                     [Op.notIn]: excludeIds
                 }
             },
-            attributes: ['id', 'name', 'last_name', 'profile_photo']
+            attributes: ['id', 'name', 'last_name', 'profile_photo', 'user_name']
         });
 
         return res.status(200).send({ message: 'Users found', notFriends });

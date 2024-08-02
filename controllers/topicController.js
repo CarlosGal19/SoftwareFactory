@@ -120,10 +120,22 @@ const updateTopic = async (req, res) => {
     }
 }
 
+const getCounter = async (req, res) => {
+    try {
+        const count = await Topic.count();
+        return res.status(200).send({ count });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving the topic count.'
+        });
+    }
+}
+
 module.exports = {
     addTopic,
     getTopics,
     getTopic,
     deleteTopic,
-    updateTopic
+    updateTopic,
+    getCounter
 }

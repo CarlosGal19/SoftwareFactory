@@ -109,10 +109,22 @@ const updateForum = async (req, res) => {
     }
 }
 
+const getCounter = async (req, res) => {
+    try {
+        const count = await Forum.count();
+        return res.status(200).send({ count });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving the counter.'
+        });
+    }
+}
+
 module.exports = {
     addForum,
     getForums,
     getForum,
     deleteForum,
-    updateForum
+    updateForum,
+    getCounter
 }

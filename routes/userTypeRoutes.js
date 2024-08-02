@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUserType, getUserTypes, getUserType } = require('../controllers/userTypeController.js');
+const { addUserType, getUserTypes, getUserType, getCounter } = require('../controllers/userTypeController.js');
 const authMiddleware = require('../middlewares/authMiddleware.js');
 const adminMiddleware = require('../middlewares/adminMiddleware.js');
 
@@ -15,6 +15,10 @@ router.get('/', authMiddleware, adminMiddleware, (req, res) => {
 
 router.get('/:id', authMiddleware, adminMiddleware, (req, res) => {
     getUserType(req, res);
+});
+
+router.get('/count/all', authMiddleware, adminMiddleware, (req, res) => {
+    getCounter(req, res);
 });
 
 module.exports = router;

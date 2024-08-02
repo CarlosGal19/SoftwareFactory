@@ -239,6 +239,15 @@ const newPassword = async (req, res) => {
     }
 }
 
+const getCountAdmin = async (req, res) => {
+    try {
+        const count = await userModel.count({ where: { user_type_id: 1 } });
+        return res.status(200).json({ count });
+    } catch (error) {
+        return res.status(500).json({ message: `Internal server error: ${error.message}` });
+    }
+}
+
 module.exports = {
     addUser,
     confirmUser,
@@ -249,5 +258,6 @@ module.exports = {
     newPassword,
     updateUser,
     getUser,
-    authAdmin
+    authAdmin,
+    getCountAdmin
 };

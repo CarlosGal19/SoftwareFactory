@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, confirmUser, authUser, userProfile, resetPassword, validateToken, newPassword, updateUser, getUser, authAdmin } = require('../controllers/userController.js')
+const { addUser, confirmUser, authUser, userProfile, resetPassword, validateToken, newPassword, updateUser, getUser, authAdmin, getCountAdmin } = require('../controllers/userController.js')
 const authMiddleware = require('../middlewares/authMiddleware.js');
 
 
@@ -43,6 +43,10 @@ router.get('/forget-password/:token', (req, res) => {
 
 router.post('/forget-password/:token', (req, res) => {
     newPassword(req, res);
+});
+
+router.get('/admin/count', authMiddleware, (req, res) => {
+    getCountAdmin(req, res);
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware.js');
-const { getPost, getPosts, createPost, updatePost, deletePost, getMyPosts, getPostsByTopic } = require('../controllers/postController.js');
+const { getPost, getPosts, createPost, updatePost, deletePost, getMyPosts, getPostsByTopic, getNoValidatedPosts } = require('../controllers/postController.js');
 
 const router = express.Router();
 
@@ -30,6 +30,10 @@ router.patch('/:id', authMiddleware, (req, res) => {
 
 router.delete('/:id', authMiddleware, (req, res) => {
     deletePost(req, res);
+});
+
+router.get('/validated/no', authMiddleware, (req, res) => {
+    getNoValidatedPosts(req, res);
 });
 
 module.exports = router;

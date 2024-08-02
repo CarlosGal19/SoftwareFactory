@@ -14,7 +14,7 @@ const adminMiddleware = async (req, res, next) => {
             return res.status(404).json({ message: 'User type not found' });
         }
 
-        if (userType.name !== 'Admin') {
+        if (userType.name.toLowerCase() !== 'admin') {
             return res.status(403).json({ message: 'User is not an admin' });
         }
 

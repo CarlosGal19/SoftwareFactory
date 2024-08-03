@@ -65,10 +65,6 @@ const deleteForum = async (req, res) => {
             return res.status(404).send({ message: 'Forum not found' });
         }
 
-        if (forum.creator_id !== userId) {
-            return res.status(403).send({ message: 'You are not allowed to delete this forum' });
-        }
-
         await forum.destroy();
 
         return res.status(200).send({ message: 'Forum deleted' });
@@ -87,9 +83,6 @@ const updateForum = async (req, res) => {
         const forum = await Forum.findByPk(id);
         if (!forum) {
             return res.status(404).send({ message: 'Forum not found' });
-        }
-        if (forum.creator_id !== userId) {
-            return res.status(403).send({ message: 'You are not allowed to update this forum' });
         }
         const name = req.body.name;
         const description = req.body.description;

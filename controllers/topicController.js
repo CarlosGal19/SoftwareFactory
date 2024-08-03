@@ -74,10 +74,6 @@ const deleteTopic = async (req, res) => {
             return res.status(404).send({ message: 'Topic not found' });
         }
 
-        if (topic.creator_id !== userId) {
-            return res.status(403).send({ message: 'You are not allowed to delete this topic' });
-        }
-
         await topic.destroy();
 
         return res.status(200).send({ message: 'Topic deleted' });
@@ -96,9 +92,6 @@ const updateTopic = async (req, res) => {
         const topic = await Topic.findByPk(id);
         if (!topic) {
             return res.status(404).send({ message: 'Topic not found' });
-        }
-        if (topic.creator_id !== userId) {
-            return res.status(403).send({ message: 'You are not allowed to update this topic' });
         }
         const forum_id = req.body.forum_id;
         const name = req.body.name;

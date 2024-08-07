@@ -1,12 +1,16 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware.js');
 const adminMiddleware = require('../middlewares/adminMiddleware.js');
-const { addTopic, getTopic, getTopics, deleteTopic, updateTopic, getCounter } = require('../controllers/topicController.js');
+const { addTopic, getTopic, getTopics, deleteTopic, updateTopic, getCounter,getAll } = require('../controllers/topicController.js');
 
 const router = express.Router();
 
 router.get('/all/:id', authMiddleware, async (req, res) => {
     getTopics(req, res);
+});
+
+router.get('/', authMiddleware, async (req, res) => {
+    getAll(req, res);
 });
 
 router.get('/:id', authMiddleware, async (req, res) => {

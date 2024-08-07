@@ -2,6 +2,20 @@ const db = require('../db.js');
 
 const Topic = db.topics;
 
+const getAll = async (req, res) => {
+    try {
+        const topics = await Topic.findAll();
+        if (!topics) {
+            return res.status(404).send({ message: 'Topics not found' });
+        }
+        return res.status(200).send({ message: 'Topics found', topics });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Some error occurred while retrieving topics.'
+        });
+    }
+}
+
 const getTopics = async (req, res) => {
     try {
         const id = req.params.id;
@@ -130,5 +144,6 @@ module.exports = {
     getTopic,
     deleteTopic,
     updateTopic,
-    getCounter
+    getCounter,
+    getAll
 }

@@ -36,7 +36,7 @@ const getMyPosts = async (req, res) => {
     try {
         const user = req.user;
         const id = user.id;
-        const posts = await Post.findAll({ where: { creator_id: id } });
+        const posts = await Post.findAll({ where: { creator_id: id, is_validated: true } });
         if (!posts) {
             return res.status(404).send({ message: 'Posts not found' });
         }
@@ -135,7 +135,7 @@ const getPostsByTopic = async (req, res) => {
     try {
         const id = req.params.id;
         if (!id) return res.status(400).send({ message: 'Please provide the topic id.' });
-        const posts = await Post.findAll({ where: { topic_id: id } });
+        const posts = await Post.findAll({ where: { topic_id: id, is_validated: true } });
         if (!posts) {
             return res.status(404).send({ message: 'Posts not found' });
         }

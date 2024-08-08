@@ -101,7 +101,6 @@ const deleteTopic = async (req, res) => {
 const updateTopic = async (req, res) => {
     try {
         const id = req.params.id;
-        const userId = req.user.id;
         if (!id) return res.status(400).send({ message: 'Please provide the topic id.' });
         const topic = await Topic.findByPk(id);
         if (!topic) {

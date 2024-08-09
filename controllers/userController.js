@@ -168,7 +168,7 @@ const authAdmin = async (req, res) => {
         const type='admin';
 
         // Generate JWT token
-        const token = generateJWT(user.id, user.name, type);
+        const token = generateJWT(user.id);
 
         // Respond with a 200 status and the generated token
         return res.status(200).send({ message: 'User logged in', token });

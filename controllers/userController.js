@@ -64,6 +64,17 @@ const getUser = async (req, res) => {
     }
 }
 
+const getAdmins = async (req, res) => {
+    try {
+        const admins = await userModel.findAll({ where: { user_type_id : 1} })
+        return res.status(200).send({ message: 'Admins found', admins });
+    } catch (error) {
+        return res.status(500).send({
+            message: error.message || 'Some error occurred while confirming the user.'
+        });
+    }
+}
+
 const updateUser = async (req, res) => {
     try {
         const id = req.user.id;
@@ -259,5 +270,6 @@ module.exports = {
     updateUser,
     getUser,
     authAdmin,
-    getCountAdmin
+    getCountAdmin,
+    getAdmins
 };

@@ -50,21 +50,6 @@ const addUser = async (req, res) => {
     }
 };
 
-const getUser = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const user_name = await userModel.findOne({ where: { id }, attributes: ['user_name'] });
-        if (!user_name) {
-            return res.status(404).send({ message: 'User not found' });
-        }
-        return res.status(200).send({ message: 'User found', user_name });
-    } catch (error) {
-        return res.status(500).send({
-            message: error.message || 'Some error occurred while retrieving the user.'
-        });
-    }
-}
-
 const getAdmins = async (req, res) => {
     try {
         const admins = await userModel.findAll({ where: { user_type_id : 1} })
@@ -269,7 +254,6 @@ module.exports = {
     validateToken,
     newPassword,
     updateUser,
-    getUser,
     authAdmin,
     getCountAdmin,
     getAdmins

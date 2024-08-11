@@ -14,10 +14,6 @@ router.post('/admin/login', (req, res) => {
     authAdmin(req, res);
 });
 
-router.get('/:id', authMiddleware, (req, res) => {
-    getUser(req, res);
-});
-
 router.patch('/update', authMiddleware, (req, res) => {
     updateUser(req, res);
 })

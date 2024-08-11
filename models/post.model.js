@@ -1,5 +1,5 @@
 const postModel = (sequelize, Sequelize) => {
-    const PostModel = sequelize.define('post', {
+    const Post = sequelize.define('post', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -43,7 +43,10 @@ const postModel = (sequelize, Sequelize) => {
         freezeTableName: true,
         tableName: 'post'
     });
-    return PostModel;
-}
+
+    Post.belongsTo(sequelize.models.user, { foreignKey: 'creator_id', as: 'creator' });
+
+    return Post;
+};
 
 module.exports = postModel;

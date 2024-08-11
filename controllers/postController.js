@@ -1,20 +1,32 @@
 const db = require('../db.js');
 
 const Post = db.posts;
+const User = db.users;
 
 const getPosts = async (req, res) => {
     try {
-        const posts = await Post.findAll({ where: { is_validated: true } });
+        const posts = await Post.findAll({
+            where: { is_validated: true },
+            attributes: ['id', 'title', 'content', 'updated_at'],
+            include: [{
+                model: User,
+                as: 'creator',
+                attributes: ['name', 'last_name']
+            }]
+        });
+
         if (!posts) {
             return res.status(404).send({ message: 'Posts not found' });
         }
         return res.status(200).send({ message: 'Posts found', posts });
     } catch (error) {
+        console.log(error);
         return res.status(500).send({
             message: 'Some error occurred while retrieving posts.'
         });
     }
 }
+
 
 const getPost = async (req, res) => {
     try {

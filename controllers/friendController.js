@@ -5,18 +5,6 @@ const Friend = db.friends;
 const User = db.users;
 const FriendRequest = db.friendRequests;
 
-const getFriends = async (req, res) => {
-    try {
-        const user_id = req.user.id;
-        if (!user_id) return res.status(400).send({ message: 'Please provide the user id.' });
-        const friends = await Friend.findAll({ where: { [db.Sequelize.Op.or]: [{ user_1_id: user_id }, { user_2_id: user_id }] } });
-        return res.status(200).send({ friends });
-    } catch (error) {
-        return res.status(500).send({
-            message: 'Some error occurred while retrieving the friends.'
-        });
-    }
-}
 
 const deleteFriend = async (req, res) => {
     try {
@@ -132,7 +120,6 @@ const getMyNotFriends = async (req, res) => {
 }
 
 module.exports = {
-    getFriends,
     deleteFriend,
     getMyFriends,
     getMyNotFriends

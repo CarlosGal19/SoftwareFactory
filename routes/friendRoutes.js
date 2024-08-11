@@ -1,6 +1,5 @@
 const express = require('express');
 const {
-    getFriends,
     deleteFriend,
     getMyFriends,
     getMyNotFriends
@@ -8,10 +7,6 @@ const {
 const authMiddleware = require('../middlewares/authMiddleware.js');
 
 const router = express.Router();
-
-router.get('/', authMiddleware, async (req, res) => {
-    getFriends(req, res);
-});
 
 router.get('/me/all', authMiddleware, async (req, res) => {
     getMyFriends(req, res);

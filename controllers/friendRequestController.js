@@ -95,12 +95,15 @@ const updateFriendRequest = async (req, res) => {
         if (status !== 'accepted' && status !== 'rejected') {
             return res.status(400).send({ message: 'Invalid status. Please provide either accepted or rejected.' });
         }
-        const friendRequest = await FriendRequest.update({ status }, { where: { sender_id, receiver_id } });
+        await FriendRequest.update({ status }, { where: { sender_id, receiver_id } });
         if (status === 'rejected') {
-            return res.status(200).send({ message: 'Friend request rejected successfully', friendRequest });
+            // await friendRequest.destroy({ where: { sender_id, receiver_id } });
+            await FriendRequest.destroy({ where: { sender_id, receiver_id } });
+            return res.status(200).send({ message: 'Friend request rejected successfully' });
         }
         const newFriend = await Friend.create({ user_1_id: sender_id, user_2_id: receiver_id });
-        return res.status(200).send({ message: 'Friend request accepted successfully', friendRequest, newFriend });
+        await FriendRequest.destroy({ where: { sender_id, receiver_id } });
+        return res.status(200).send({ message: 'Friend request accepted successfully', newFriend });
     } catch (error) {
         return res.status(500).send({
             message: 'Some error occurred while updating the friend request.'

@@ -176,13 +176,13 @@ const getNoValidatedPosts = async (req, res) => {
 const validatePost = async (req, res) => {
     try {
         const post_id = req.params.id;
-        const option = req.body.option;
+        const status = req.body.status;
         if (!post_id) return res.status(400).send({ message: 'Please provide the post id.' });
         const post = await Post.findByPk(post_id);
         if (!post) {
             return res.status(404).send({ message: 'Post not found' });
         }
-        if (option === 'rejected') {
+        if (status === 'rejected') {
             await post.destroy();
             return res.status(200).send({ message: 'Post rejected successfully' });
         }

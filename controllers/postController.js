@@ -147,7 +147,12 @@ const getPostsByTopic = async (req, res) => {
     try {
         const id = req.params.id;
         if (!id) return res.status(400).send({ message: 'Please provide the topic id.' });
-        const posts = await Post.findAll({ where: { topic_id: id, is_validated: true } });
+        const posts = await Post.findAll({ where: { topic_id: id, is_validated: true }, attributes: ['id', 'title', 'content', 'updated_at', 'created_at'],
+            include: [{
+                model: User,
+                as: 'creator',
+                attributes: ['name', 'last_name']
+            }] });
         if (!posts) {
             return res.status(404).send({ message: 'Posts not found' });
         }

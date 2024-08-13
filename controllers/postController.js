@@ -107,6 +107,7 @@ const updatePost = async (req, res) => {
         post.content = content;
         post.title = title;
         post.url_img = url_img;
+        post.is_validated = false;
         await post.save();
 
         return res.status(200).send({ message: 'Post updated successfully', post });

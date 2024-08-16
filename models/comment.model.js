@@ -1,22 +1,25 @@
-const friendRequestModel = (sequelize, Sequelize) => {
-    const FriendRequest = sequelize.define('friend_request', {
+const commentModel = (sequelize, Sequelize) => {
+    const Comment = sequelize.define('comment', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        sender_id: {
+        post_id: {
             type: Sequelize.INTEGER,
-            allowNull: false
-        },
-        receiver_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-        },
-        status: {
-            type: Sequelize.ENUM('pending', 'accepted', 'rejected'),
             allowNull: false,
-            defaultValue: 'pending'
+        },
+        creator_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+        },
+        content: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        parent_comment_id: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
         },
         created_at: {
             type: Sequelize.DATE,
@@ -26,13 +29,13 @@ const friendRequestModel = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW
         }
-    },{
+    }, {
         timestamps: false,
         freezeTableName: true,
-        tableName: 'friend_request'
+        tableName: 'comment'
     });
 
-    return FriendRequest;
-};
+    return Comment;
+}
 
-module.exports = friendRequestModel;
+module.exports = commentModel;
